@@ -48,7 +48,9 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    maint() {
+    maint()
+    : client_host_("localhost"), server_host_(""),
+      client_port_(80), server_port_(8080) {
     }
     virtual ~maint() {
     }
@@ -64,6 +66,27 @@ protected:
             err = this->usage(argc, argv, env);
         }
         return err;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char_t* host() const {
+        return client_host();
+    }
+    virtual unsigned port() const {
+        return client_port();
+    }
+    virtual const char_t* client_host() const {
+        return client_host_.chars();
+    }
+    virtual unsigned client_port() const {
+        return client_port_;
+    }
+    virtual const char_t* server_host() const {
+        return server_host_.chars();
+    }
+    virtual unsigned server_port() const {
+        return server_port_;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -93,6 +116,8 @@ protected:
 protected:
     typedef int (Derives::*run_t)(int argc, char_t** argv, char_t** env);
     run_t run_;
+    char_string_t client_host_, server_host_;
+    ushort client_port_, server_port_;
 };
 typedef maint<> main;
 

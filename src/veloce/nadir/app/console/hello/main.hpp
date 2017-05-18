@@ -22,10 +22,6 @@
 #define _VELOCE_NADIR_APP_CONSOLE_HELLO_MAIN_HPP
 
 #include "veloce/nadir/app/console/network/main.hpp"
-#include "rete/nadir/network/ip/v6/endpoint.hpp"
-#include "rete/nadir/network/ip/v4/endpoint.hpp"
-#include "rete/nadir/network/ip/endpoint.hpp"
-#include "rete/nadir/network/endpoint.hpp"
 #include "fila/nadir/mt/os/thread.hpp"
 #include "fila/nadir/mt/os/semaphore.hpp"
 #include "fila/nadir/mt/os/mutex.hpp"
@@ -74,13 +70,8 @@ protected:
     protected:
         fila::mt::semaphore& sem_;
     };
-    virtual int run(int argc, char_t** argv, char_t** env) {
+    virtual int run_(int argc, char_t** argv, char_t** env) {
         int err = 0;
-        try {
-            rete::network::ip::v6::endpoint ep(this->host(), this->port());
-        } catch (const rete::attach_exception& e) {
-            CRONO_LOG_ERROR("...caught rete::attach_exception& e = " << e.status() << " " << e.status_to_chars() << " ");
-        }
         /*try {
             fila::mt::os::semaphore sem;
             try {
